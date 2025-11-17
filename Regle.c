@@ -1,1 +1,108 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include "Regle.h"
+
+Regle* new_rule(void){
+    Regle *new = (Regle*)malloc(sizeof(Regle));
+    if(!new){
+        return NULL;
+    }
+    new->premise = NULL;
+    new->conclusion = NULL;
+    new->next = NULL;
+    return new;
+}
+
+Regle* add_premisse(Regle*r, char* name){
+    Proposition *temp = r->premise;
+    Proposition *new = (Proposition*)malloc(sizeof(Proposition));
+    if(!new){
+        return NULL;
+    }
+    int n = strlen(name);
+    new->name = (char*)malloc(n*sizeof(char));
+    strcpy(new->name, name);
+    new->next = NULL;
+    if(!temp){
+        r->premise = new;
+        return r;
+    }
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    temp->next = new;
+    return r;
+}
+
+Regle* add_conclusion(Regle*r, char* name){
+    int n = strlen(name);
+    r->conclusion = (char*)malloc(n*sizeof(char));
+    strcpy(r->conclusion, name);
+    return r;
+}
+
+Regle* remove_prem(Regle* r, char *name){
+    if(!r){
+        return r;
+    }
+    Proposition *temp = r->premise;
+    if(!temp){
+        return r;
+    }
+
+    if(temp && strcmp(temp->name, name) == 0){
+        r->premise = temp->next;
+        free(temp->name);
+        free(temp);
+        return r;
+    }
+
+    while(temp->next != NULL && strcmp(temp->next->name, name) != 0){
+        temp = temp->next;
+    }
+    if(temp->next && strcmp(temp->next->name, name) == 0){
+        Proposition *to_free = temp->next;
+        temp->next = temp->next->next;
+        free(to_free->name);
+        free(to_free);
+    }
+
+    return r;
+}
+
+int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
+    if(liste == NULL){
+        return 0;
+    }
+    else if(strcmp(liste->name, propo) == 0){
+        return 1;
+    }
+    else{
+        return Is_in(liste->next, propo);
+    }
+}
+
+void print_rules(Regle *r){
+    if(!r){
+        printf("Regle inexistante\n");
+    }
+
+    Proposition *temp = r->premise;
+    if(!temp){
+        printf("Aucune prémisse\n");
+    }
+    else{
+        while(temp != NULL){
+            printf("%s,", temp->name);
+            temp = temp->next;
+        }
+
+        if(r->conclusion){
+            printf("=> %s\n", r->conclusion);
+        }
+        else{
+            printf("=> pas de conclu\n");
+        }
+    }
+}

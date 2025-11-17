@@ -5,4 +5,5 @@ project(projet LANGUAGES C)
 add_executable(
     projet 
     main.c
+    Regle.c
 )

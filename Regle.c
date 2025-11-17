@@ -71,6 +71,25 @@ Regle* remove_prem(Regle* r, char *name){
     return r;
 }
 
+Proposition* Get_prem(Regle* r){
+    if(!r){
+        return NULL;
+    }
+    return r->premise;
+}
+
+char* Get_Conclu(Regle *r){
+    if(!r){
+        return NULL;
+    }
+    if(strcmp(r->conclusion, "") == 0){
+        return NULL;
+    }
+    char *text = (char*)malloc(strlen(r->conclusion)*sizeof(r->conclusion));
+    strcpy(text, r->conclusion);
+    return text;
+}
+
 int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
     if(liste == NULL){
         return 0;
@@ -81,6 +100,16 @@ int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
     else{
         return Is_in(liste->next, propo);
     }
+}
+
+int Is_empty(Regle *regle){ //return 0 if empty else 1
+    if(!regle){
+        return -1;
+    }
+    if(regle->premise == NULL){
+        return 0;
+    }
+    return 1;
 }
 
 void print_rules(Regle *r){

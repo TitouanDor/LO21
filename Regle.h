@@ -12,6 +12,8 @@ typedef struct regle{
     struct regle *next;
 }Regle;
 
+typedef Proposition *BaseFait;
+
 Regle* new_rule(void);
 Regle* add_premisse(Regle *regle, char *name);
 Regle* add_conclusion(Regle *regle, char *name);

@@ -19,13 +19,7 @@ Regle* add_premise(Regle *regle, char *name);
 Regle* add_conclusion(Regle *regle, char *name);
 Regle* remove_premise(Regle* r, char *name);
 
-<<<<<<< HEAD
-=======
-Proposition* Get_prem(Regle *r);
-Proposition* ajouter_queue(Proposition *lp, char *name);
-Proposition* supp_doublon(Proposition *lp);
->>>>>>> edc4993 (ajout base connaissance)
-
+Proposition* add_to_queue(Proposition* lp, char *name);
 Proposition* Get_premise(Regle *r);
 Proposition* remove_duplicates(Proposition* liste);
 

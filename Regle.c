@@ -71,6 +71,23 @@ Regle* remove_premise(Regle* r, char *name){
     return r;
 }
 
+Proposition* add_to_queue(Proposition *lp, char *name){
+    Proposition *temp = lp;
+    Proposition *new = (Proposition*)calloc(1, sizeof(Proposition));
+    new->next = NULL;
+    new->name = (char*)calloc(strlen(name), sizeof(char));
+    strcpy(new->name, name);
+    if(!lp){
+        return new;
+    }
+    while (temp->next)
+    {
+        temp=temp->next;
+    }
+    temp->next = new;
+    return lp;
+}
+
 Proposition* remove_duplicates(Proposition* liste){
     Proposition *current = liste;
     if (liste == NULL) {

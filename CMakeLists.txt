@@ -6,4 +6,5 @@ add_executable(
     projet 
     main.c
     Regle.c
+    BaseConnaissance.c
 )

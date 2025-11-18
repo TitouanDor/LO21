@@ -14,14 +14,14 @@ Regle* new_rule(void){
     return new;
 }
 
-Regle* add_premisse(Regle*r, char* name){
+Regle* add_premise(Regle*r, char* name){
     Proposition *temp = r->premise;
     Proposition *new = (Proposition*)malloc(sizeof(Proposition));
     if(!new){
         return NULL;
     }
     int n = strlen(name);
-    new->name = (char*)malloc(n*sizeof(char));
+    new->name = (char*)malloc((n+1)*sizeof(char));
     strcpy(new->name, name);
     new->next = NULL;
     if(!temp){
@@ -37,12 +37,12 @@ Regle* add_premisse(Regle*r, char* name){
 
 Regle* add_conclusion(Regle*r, char* name){
     int n = strlen(name);
-    r->conclusion = (char*)malloc(n*sizeof(char));
+    r->conclusion = (char*)malloc((n+1)*sizeof(char));
     strcpy(r->conclusion, name);
     return r;
 }
 
-Regle* remove_prem(Regle* r, char *name){
+Regle* remove_premise(Regle* r, char *name){
     if(!r){
         return r;
     }
@@ -71,21 +71,43 @@ Regle* remove_prem(Regle* r, char *name){
     return r;
 }
 
-Proposition* Get_prem(Regle* r){
+Proposition* remove_duplicates(Proposition* liste){
+    Proposition *current = liste;
+    if (liste == NULL) {
+        return NULL;
+    }
+    while (current != NULL) {
+        Proposition *runner = current;
+        while (runner->next != NULL) {
+            if (strcmp(runner->next->name, current->name) == 0) { //si doublon, on sauvegarde pour le supp apres
+                Proposition *to_free = runner->next;
+                runner->next = to_free->next; //on deplace le pointeur
+                free(to_free->name);
+                free(to_free);
+            } else {
+                runner = runner->next;
+            }
+        }
+        current = current->next;
+    }
+    return liste;
+}
+
+Proposition* Get_premise(Regle* r){
     if(!r){
         return NULL;
     }
     return r->premise;
 }
 
-char* Get_Conclu(Regle *r){
+char* Get_Conclusion(Regle *r){
     if(!r){
         return NULL;
     }
-    if(strcmp(r->conclusion, "") == 0){
+    if(r->conclusion == NULL){
         return NULL;
     }
-    char *text = (char*)malloc(strlen(r->conclusion)*sizeof(r->conclusion));
+    char *text = (char*)malloc(strlen(r->conclusion)+1);
     strcpy(text, r->conclusion);
     return text;
 }
@@ -114,12 +136,12 @@ int Is_empty(Regle *regle){ //return 0 if empty else 1
 
 void print_rules(Regle *r){
     if(!r){
-        printf("Regle inexistante\n");
+        printf("Regle inexistante !\n");
     }
 
     Proposition *temp = r->premise;
     if(!temp){
-        printf("Aucune prémisse\n");
+        printf("Aucune prémisse !\n");
     }
     else{
         while(temp != NULL){
@@ -131,7 +153,7 @@ void print_rules(Regle *r){
             printf("=> %s\n", r->conclusion);
         }
         else{
-            printf("=> pas de conclu\n");
+            printf("=> Pas de conclusion\n");
         }
     }
 }

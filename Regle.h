@@ -15,15 +15,17 @@ typedef struct regle{
 typedef Proposition *BaseFait;
 
 Regle* new_rule(void);
-Regle* add_premisse(Regle *regle, char *name);
+Regle* add_premise(Regle *regle, char *name);
 Regle* add_conclusion(Regle *regle, char *name);
-Regle* remove_prem(Regle* r, char *name);
+Regle* remove_premise(Regle* r, char *name);
 
-Proposition* Get_prem(Regle *r);
 
-char* Get_Conclu(Regle *r);
+Proposition* Get_premise(Regle *r);
+Proposition* remove_duplicates(Proposition* liste);
 
-int Is_in(Proposition* liste, char *propo);
+char* Get_Conclusion(Regle *r);
+
+int Is_in(Proposition* liste, char *proposition);
 int Is_empty(Regle* r);
 
 void print_rules(Regle *r);

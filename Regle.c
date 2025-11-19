@@ -20,6 +20,12 @@ Regle* add_premise(Regle*r, char* name){
     if(!new){
         return NULL;
     }
+    if(!r){
+        return NULL;
+    }
+    if(!name){
+        return r;
+    }
     int n = strlen(name);
     new->name = (char*)malloc((n+1)*sizeof(char));
     strcpy(new->name, name);
@@ -36,6 +42,9 @@ Regle* add_premise(Regle*r, char* name){
 }
 
 Regle* add_conclusion(Regle*r, char* name){
+    if(!r){
+        return NULL;
+    }
     int n = strlen(name);
     r->conclusion = (char*)malloc((n+1)*sizeof(char));
     strcpy(r->conclusion, name);
@@ -58,7 +67,7 @@ Regle* remove_premise(Regle* r, char *name){
         return r;
     }
 
-    while(temp->next != NULL && strcmp(temp->next->name, name) != 0){
+    while(temp->next && strcmp(temp->next->name, name) != 0){
         temp = temp->next;
     }
     if(temp->next && strcmp(temp->next->name, name) == 0){
@@ -80,7 +89,7 @@ Proposition* add_to_queue(Proposition *lp, char *name){
     if(!lp){
         return new;
     }
-    while (temp->next)
+    while(temp->next)
     {
         temp=temp->next;
     }
@@ -90,10 +99,10 @@ Proposition* add_to_queue(Proposition *lp, char *name){
 
 Proposition* remove_duplicates(Proposition* liste){
     Proposition *current = liste;
-    if (liste == NULL) {
+    if (!liste) {
         return NULL;
     }
-    while (current != NULL) {
+    while (current) {
         Proposition *runner = current;
         while (runner->next != NULL) {
             if (strcmp(runner->next->name, current->name) == 0) { //si doublon, on sauvegarde pour le supp apres

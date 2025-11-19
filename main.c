@@ -20,5 +20,6 @@ int main(void){
     printf("%d\n", Is_empty(r1));
     printf("%s\n", Get_Conclusion(r1));
     print_rules(r1);
+    BC bc = create_BC();
     return 0;
 }

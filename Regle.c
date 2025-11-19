@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "Regle.h"
 
-Regle* new_rule(void){
+Regle *new_rule(void){
     Regle *new = (Regle*)malloc(sizeof(Regle));
     if(!new){
         return NULL;
@@ -14,26 +14,27 @@ Regle* new_rule(void){
     return new;
 }
 
-Regle* add_premise(Regle*r, char* name){
-    Proposition *temp = r->premise;
-    Proposition *new = (Proposition*)malloc(sizeof(Proposition));
-    if(!new){
-        return NULL;
-    }
+Regle *add_premise(Regle*r, char* name){
     if(!r){
+        //si la règle n'existe pas renvoyer NULL
         return NULL;
     }
     if(!name){
+        //si aucun nom n'a été donné renvoyer la règle sans modification
         return r;
     }
-    int n = strlen(name);
-    new->name = (char*)malloc((n+1)*sizeof(char));
-    strcpy(new->name, name);
-    new->next = NULL;
+    Proposition *temp = r->premise; //pointeur vers une prémisse pour ce déplacer à la fin de la liste chainée
+    Proposition *new = new_proposition(name); //pointeur vers la nouvelle prémisse à ajouter
+
+    if(!new){
+        //erreur dans l'allocation de new_proposition() renvoyer la règle sans modification
+        return r;
+    }
     if(!temp){
         r->premise = new;
         return r;
     }
+
     while(temp->next != NULL){
         temp = temp->next;
     }
@@ -41,9 +42,14 @@ Regle* add_premise(Regle*r, char* name){
     return r;
 }
 
-Regle* add_conclusion(Regle*r, char* name){
+Regle *add_conclusion(Regle*r, char* name){
     if(!r){
+        //si la règle n'existe pas renvoyer NULL
         return NULL;
+    }
+    if(!name){
+        //si aucun nom n'a été donné renvoyer la règle sans modification
+        return r;
     }
     int n = strlen(name);
     r->conclusion = (char*)malloc((n+1)*sizeof(char));
@@ -51,8 +57,13 @@ Regle* add_conclusion(Regle*r, char* name){
     return r;
 }
 
-Regle* remove_premise(Regle* r, char *name){
+Regle *remove_premise(Regle* r, char *name){
     if(!r){
+        //si la règle n'existe pas renvoyer NULL
+        return NULL;
+    }
+    if(!name){
+        //si aucun nom n'a été donné renvoyer la règle sans modification
         return r;
     }
     Proposition *temp = r->premise;
@@ -61,6 +72,7 @@ Regle* remove_premise(Regle* r, char *name){
     }
 
     if(temp && strcmp(temp->name, name) == 0){
+        //Si la première prémisse est celle à supprimer alors la supmrime
         r->premise = temp->next;
         free(temp->name);
         free(temp);
@@ -68,9 +80,11 @@ Regle* remove_premise(Regle* r, char *name){
     }
 
     while(temp->next && strcmp(temp->next->name, name) != 0){
+        //parcour la liste jusqu'à ce que la prochaine prémisse n'existe pas ou que ce soit celle à supprimer
         temp = temp->next;
     }
     if(temp->next && strcmp(temp->next->name, name) == 0){
+        //regarde si la prémisse suivant est celle à supprimer et que la suivant existe alors supprime la suivante
         Proposition *to_free = temp->next;
         temp->next = temp->next->next;
         free(to_free->name);
@@ -80,15 +94,33 @@ Regle* remove_premise(Regle* r, char *name){
     return r;
 }
 
-Proposition* add_to_queue(Proposition *lp, char *name){
-    Proposition *temp = lp;
-    Proposition *new = (Proposition*)calloc(1, sizeof(Proposition));
-    new->next = NULL;
-    new->name = (char*)calloc(strlen(name), sizeof(char));
+Proposition *new_proposition(char *name){
+    if(!name){
+        return NULL;//si aucun nom n'a été donné renvoyer NULL
+    }
+    Proposition *new = (Proposition*)malloc(sizeof(Proposition));
+    if(!new){
+        return NULL;
+    }
+    int n = strlen(name) + 1;
+    new->name = (char*)malloc((n)*sizeof(char));
     strcpy(new->name, name);
+    new->next = NULL;
+    return new;
+}
+
+Proposition *add_to_queue(Proposition *lp, char *name){
+    if(!name){
+        //si aucun nom n'a été donné renvoyer la liste sans modification
+        return lp;
+    }
+    
+    Proposition *new = new_proposition(name);//Nouvelle proposition à ajouter à la fin de la liste
     if(!lp){
+        //si la liste est vide
         return new;
     }
+    Proposition *temp = lp;//pointeur vers une prémisse pour ce déplacer à la fin de la liste chainée
     while(temp->next)
     {
         temp=temp->next;
@@ -97,20 +129,22 @@ Proposition* add_to_queue(Proposition *lp, char *name){
     return lp;
 }
 
-Proposition* remove_duplicates(Proposition* liste){
-    Proposition *current = liste;
-    if (!liste) {
+Proposition *remove_duplicates(Proposition* liste){
+    Proposition *current = liste; //premier pointeur vers une prémisse pour ce déplacer dans la liste chainée
+    if(!liste){
+        //si la liste n'existe pas
         return NULL;
     }
-    while (current) {
-        Proposition *runner = current;
-        while (runner->next != NULL) {
-            if (strcmp(runner->next->name, current->name) == 0) { //si doublon, on sauvegarde pour le supp apres
+    while(current){
+        Proposition *runner = current; //deuxième pointeur vers une prémisse pour ce déplacer dans la liste chainée entre le premier pointeur et la fin de la liste
+        while(runner->next != NULL){
+            if(strcmp(runner->next->name, current->name) == 0){
+                //si doublon, on sauvegarde pour le supp apres
                 Proposition *to_free = runner->next;
                 runner->next = to_free->next; //on deplace le pointeur
                 free(to_free->name);
                 free(to_free);
-            } else {
+            }else{
                 runner = runner->next;
             }
         }
@@ -119,18 +153,21 @@ Proposition* remove_duplicates(Proposition* liste){
     return liste;
 }
 
-Proposition* Get_premise(Regle* r){
+Proposition *Get_premise(Regle* r){
     if(!r){
+        //si la règle donnée n'existe pas
         return NULL;
     }
     return r->premise;
 }
 
-char* Get_Conclusion(Regle *r){
+char *Get_Conclusion(Regle *r){
     if(!r){
+        //si la règle donée n'existe pas
         return NULL;
     }
     if(r->conclusion == NULL){
+        //si la conclusion n'existe pas
         return NULL;
     }
     char *text = (char*)malloc(strlen(r->conclusion)+1);
@@ -140,9 +177,11 @@ char* Get_Conclusion(Regle *r){
 
 int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
     if(liste == NULL){
+        //si la liste est vide
         return 0;
     }
-    else if(strcmp(liste->name, propo) == 0){
+    if(strcmp(liste->name, propo) == 0){
+        //si la proposition est celle cherchée
         return 1;
     }
     else{
@@ -150,23 +189,27 @@ int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
     }
 }
 
-int Is_empty(Regle *regle){ //return 0 if empty else 1
+int Is_empty(Regle *regle){ //return 1 if empty else 0
     if(!regle){
+        //Si la règle donnée n'existe pas
         return -1;
     }
     if(regle->premise == NULL){
-        return 0;
+        //si la liste de prémisse est vide
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 void print_rules(Regle *r){
     if(!r){
+        //si aucune règle n'a été donnée
         printf("Regle inexistante !\n");
     }
 
     Proposition *temp = r->premise;
     if(!temp){
+        //si la règle n'as aucune prémisse
         printf("Aucune prémisse !\n");
     }
     else{

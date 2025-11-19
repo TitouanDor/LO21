@@ -49,6 +49,14 @@ Regle *add_conclusion(Regle *rule, char *name_conclusion);
 Regle *remove_premise(Regle *rule, char *name_premise);
 
 /**
+ * Crée une nouvelle proposition et l'initialise avec le nom donné.
+ *
+ * \param name Nom de la proposition à créer.
+ * \return Un pointeur vers la nouvelle structure Proposition.
+ */
+Proposition *new_proposition(char *name);
+
+/**
  * Ajoute une proposition à la file (queue) de propositions.
  *
  * \param list_proposition Liste de propositions existante.

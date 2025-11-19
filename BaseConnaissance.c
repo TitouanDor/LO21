@@ -4,10 +4,13 @@
 #include "Regle.h"
 
 BC create_BC(){
-    BC new = (BC)calloc(1, sizeof(Regle));
+    BC new = (BC)malloc(sizeof(Regle));
     if(!new){
         return NULL;
     }
+    new->conclusion = "";
+    new->next = NULL;
+    new->premise = NULL;
     return new;
 }
 
@@ -15,7 +18,7 @@ BC add_rules(BC bc, Regle *r){
     if(!bc){
         return NULL;
     }
-    Regle *temp = bc;
+    Regle *temp = bc; //variable temp pour ce déplacer à la fin de la liste chainée
     while(temp->next != NULL){
         temp = temp->next;
     }
@@ -37,12 +40,12 @@ BaseFait MI(BC baseC, BaseFait baseF){
     while(fait){
         Regle *r = baseC;
         while(r){
-            Proposition *prem = Get_prem(r);
+            Proposition *prem = Get_premise(r);
             if(Is_in(prem, fait->name)){
-                r = remove_prem(r, fait->name);
+                r = remove_premise(r, fait->name);
             }
             if(Is_empty(r)){
-                baseF = ajouter_queue(baseF, fait->name);
+                baseF = add_to_queue(baseF, fait->name);
             }
 
             r = r->next;
@@ -56,7 +59,7 @@ void print_BC(BC bc){
     if(!bc){
         printf("Base de connaissance Vide\n");
     }
-    Regle *temp = bc;
+    Regle *temp = bc; //variable temp pour ce déplacer dans la liste chainée
     while(temp != NULL){
         print_rules(temp);
         temp = temp->next;

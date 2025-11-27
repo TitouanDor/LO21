@@ -23,7 +23,7 @@ Regle *add_premise(Regle*r, char* name){
         //si aucun nom n'a été donné renvoyer la règle sans modification
         return r;
     }
-    Proposition *temp = r->premise; //pointeur vers une prémisse pour ce déplacer à la fin de la liste chainée
+    Proposition *temp = r->premise; //pointeur vers une prémisse pour se déplacer à la fin de la liste chainée
     Proposition *new = new_proposition(name); //pointeur vers la nouvelle prémisse à ajouter
 
     if(!new){
@@ -82,12 +82,12 @@ Regle *remove_premise(Regle* r, char *name){
     int cmp = strcmp(temp->next->name, name);
 
     while(temp->next && cmp != 0){
-        //parcour la liste jusqu'à ce que la prochaine prémisse n'existe pas ou que ce soit celle à supprimer
+        //parcours la liste jusqu'à ce que la prochaine prémisse n'existe pas ou que ce soit celle à supprimer
         temp = temp->next;
         cmp = strcmp(temp->next->name, name);
     }
     if(temp->next && cmp == 0){
-        //regarde si la prémisse suivant est celle à supprimer et que la suivant existe alors supprime la suivante
+        //regarde si la prémisse suivante est celle à supprimer et que la suivante existe alors supprime la suivante
         Proposition *to_free = temp->next;
         temp->next = temp->next->next;
         free(to_free->name);
@@ -118,12 +118,12 @@ Proposition *add_to_queue(Proposition *lp, char *name){
         return lp;
     }
     
-    Proposition *new = new_proposition(name);//Nouvelle proposition à ajouter à la fin de la liste
+    Proposition *new = new_proposition(name);    //nouvelle proposition à ajouter à la fin de la liste
     if(!lp){
         //si la liste est vide
         return new;
     }
-    Proposition *temp = lp;//pointeur vers une prémisse pour ce déplacer à la fin de la liste chainée
+    Proposition *temp = lp;//pointeur vers une prémisse pour se déplacer à la fin de la liste chainée
     while(temp->next)
     {
         temp=temp->next;
@@ -133,13 +133,13 @@ Proposition *add_to_queue(Proposition *lp, char *name){
 }
 
 Proposition *remove_duplicates(Proposition* liste){
-    Proposition *current = liste; //premier pointeur vers une prémisse pour ce déplacer dans la liste chainée
+    Proposition *current = liste;       //premier pointeur vers une prémisse pour se déplacer dans la liste chainée
     if(!liste){
         //si la liste n'existe pas
         return NULL;
     }
     while(current){
-        Proposition *runner = current; //deuxième pointeur vers une prémisse pour ce déplacer dans la liste chainée entre le premier pointeur et la fin de la liste
+        Proposition *runner = current; //deuxième pointeur vers une prémisse pour se déplacer dans la liste chainée entre le premier pointeur et la fin de la liste
         while(runner->next != NULL){
             if(strcmp(runner->next->name, current->name) == 0){
                 //si doublon, on sauvegarde pour le supp apres
@@ -166,7 +166,7 @@ Proposition *Get_premise(Regle* r){
 
 char *Get_Conclusion(Regle *r){
     if(!r){
-        //si la règle donée n'existe pas
+        //si la règle donnée n'existe pas
         return NULL;
     }
     if(r->conclusion == NULL){
@@ -178,7 +178,7 @@ char *Get_Conclusion(Regle *r){
     return text;
 }
 
-int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
+int Is_in(Proposition* liste, char *propo){     //return 1 si find sinon 0
     if(liste == NULL){
         //si la liste est vide
         return 0;
@@ -194,7 +194,7 @@ int Is_in(Proposition* liste, char *propo){//return 1 if find else 0
 
 int Is_empty(Regle *regle){ //return 1 if empty else 0
     if(!regle){
-        //Si la règle donnée n'existe pas
+        //si la règle donnée n'existe pas
         return -1;
     }
     if(regle->premise == NULL){
@@ -212,7 +212,7 @@ void print_rules(Regle *r){
 
     Proposition *temp = r->premise;
     if(!temp){
-        //si la règle n'as aucune prémisse
+        //si la règle n'a aucune prémisse
         printf("Aucune prémisse !\n");
     }
     else{
@@ -232,7 +232,7 @@ void print_rules(Regle *r){
 
 void print_BF(BaseFait bf){
     if(!bf){
-        printf("Base de Fait vide\n");
+        printf("La base de faits est vide\n");
         return;
     }
     BaseFait temp = bf; 

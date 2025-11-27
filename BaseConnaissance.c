@@ -20,13 +20,13 @@ BC add_rules(BC bc, Regle *r){
 }
 
 BaseFait MI(BC baseC, BaseFait baseF){
-    int modif = 0; //0 si aucune modif n'a été fait sinon 1
+    int modif = 0; //0 si aucune modif n'a été faite sinon 1
     if(!baseF){
-        fprintf(stderr, "Base fait Vide (MI)\n");
+        fprintf(stderr, "La base de faits est vide (MI)\n");
         return NULL;
     }
     if(!baseC){
-        fprintf(stderr, "Base connaissance Vide (MI)\n");
+        fprintf(stderr, "La base de connaissances est vide (MI)\n");
         return baseF;
     }
     fprintf(stderr, "Commencement MI\n");
@@ -53,9 +53,9 @@ BaseFait MI(BC baseC, BaseFait baseF){
 
 void print_BC(BC bc){
     if(!bc){
-        printf("Base de connaissance Vide\n");
+        printf("La base de connaissance est vide\n");
     }
-    Regle *temp = bc; //variable temp pour ce déplacer dans la liste chainée
+    Regle *temp = bc; //variable temp pour se déplacer dans la liste chainée
     while(temp != NULL){
         print_rules(temp);
         temp = temp->next;

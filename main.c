@@ -4,7 +4,7 @@
 #include "Regle.h"
 #include "BaseConnaissance.h"
 
-BC create_example_BC(void) {
+BC create_example_BC(void) {    //pour pouvoir essayer le projet avec une base de connaissances et de faits deja construite.
     BC base_connaissance = create_BC();
     
     Regle *r2 = new_rule();
@@ -25,14 +25,14 @@ BC create_example_BC(void) {
 
     Regle *r4 = new_rule();
     add_premise(r4, "Soleil");
-    add_premise(r4, "Cannicule");
+    add_premise(r4, "Canicule");
     add_conclusion(r4, "été");
     base_connaissance = add_rules(base_connaissance, r4);
 
     return base_connaissance;
 }
 
-BaseFait create_example_BF(void){
+BaseFait create_example_BF(void){      //pour pouvoir essayer le projet avec une base de connaissances et de faits deja construite.
     BaseFait new = NULL;
     new = add_to_queue(new, "Nuages");
     new = add_to_queue(new, "Froid");

@@ -106,7 +106,7 @@ Proposition *new_proposition(char *name){
         return NULL;
     }
     int n = strlen(name) + 1;
-    new->name = (char*)malloc((n)*sizeof(char));
+    new->name = (char*)malloc(n*sizeof(char));
     strcpy(new->name, name);
     new->next = NULL;
     return new;
@@ -235,9 +235,9 @@ void print_BF(BaseFait bf){
         printf("Base de Fait vide\n");
         return;
     }
-    BaseFait temp = bf;
+    BaseFait temp = bf; 
     while(temp){
-        printf("%s ", temp->name);
+        fprintf(stderr, "%s ", temp->name);
         temp = temp->next;
     }
     printf("\n");

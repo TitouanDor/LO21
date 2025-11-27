@@ -21,14 +21,15 @@ BC add_rules(BC bc, Regle *r){
 
 BaseFait MI(BC baseC, BaseFait baseF){
     int modif = 0; //0 si aucune modif n'a été fait sinon 1
-    if(!baseC){
-        fprintf(stderr, "Base connaissance Vide (MI)\n");
-        return baseF;
-    }
     if(!baseF){
         fprintf(stderr, "Base fait Vide (MI)\n");
         return NULL;
     }
+    if(!baseC){
+        fprintf(stderr, "Base connaissance Vide (MI)\n");
+        return baseF;
+    }
+    fprintf(stderr, "Commencement MI\n");
     Proposition *fait = baseF;
     while(fait){
         Regle *r = baseC;
@@ -47,9 +48,6 @@ BaseFait MI(BC baseC, BaseFait baseF){
         }
         fait = fait->next;
     }
-    print_BC(baseC);
-    print_BF(baseF);
-    baseF = remove_duplicates(baseF);
     return baseF;
 }
 

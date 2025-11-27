@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "Regle.h"
 #include "BaseConnaissance.h"
@@ -32,18 +33,34 @@ BC create_example_BC(void) {
 }
 
 BaseFait create_example_BF(void){
-    BaseFait new;
+    BaseFait new = NULL;
     new = add_to_queue(new, "Nuages");
     new = add_to_queue(new, "Froid");
     new = add_to_queue(new, "Soleil");
     return new;
 }
 
-int main(void){
-    BC bc = create_example_BC();
-    print_BC(bc);
-    BaseFait bf = create_example_BF();
-    print_BF(bf);
+int main(int argc, char *argv[]){
+    BC bc;
+    BaseFait bf = NULL;
+    int example = 0;
+    if(argc == 2){
+        if(strcmp(argv[1], "ex") == 0){
+            example = 1;
+        }
+    }
+
+    if(example == 1){
+        bc = create_example_BC();
+        bf = create_example_BF();
+        print_BC(bc);
+        print_BF(bf);
+    } else{
+        bc = create_BC();
+        bf = NULL;
+    }
+    
     bf = MI(bc, bf);
+    print_BF(bf);
     return 0;
 }

@@ -55,9 +55,14 @@ void print_BC(BC bc){
     if(!bc){
         printf("La base de connaissance est vide\n");
     }
+    printf("[ ");
     Regle *temp = bc; //variable temp pour se déplacer dans la liste chainée
     while(temp != NULL){
         print_rules(temp);
+        if(temp->next){
+            printf(", ");
+        }
         temp = temp->next;
     }
+    printf(" ]\n");
 }

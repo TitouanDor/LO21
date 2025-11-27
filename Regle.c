@@ -217,12 +217,15 @@ void print_rules(Regle *r){
     }
     else{
         while(temp != NULL){
-            printf("%s,", temp->name);
+            printf("%s", temp->name);
+            if(temp->next){
+            printf("+");
+        }
             temp = temp->next;
         }
 
         if(r->conclusion){
-            printf("=> %s\n", r->conclusion);
+            printf(" => %s", r->conclusion);
         }
         else{
             printf("=> Pas de conclusion\n");
@@ -237,7 +240,10 @@ void print_BF(BaseFait bf){
     }
     BaseFait temp = bf; 
     while(temp){
-        fprintf(stderr, "%s ", temp->name);
+        printf("%s", temp->name);
+        if(temp->next){
+            printf(", ");
+        }
         temp = temp->next;
     }
     printf("\n");

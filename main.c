@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "Regle.h"
 #include "BaseConnaissance.h"
+#define MAX 256
 
 BC create_example_BC(void) {    //pour pouvoir essayer le projet avec une base de connaissances et de faits deja construite.
     BC base_connaissance = create_BC();
@@ -40,6 +42,93 @@ BaseFait create_example_BF(void){      //pour pouvoir essayer le projet avec une
     return new;
 }
 
+char *get_input(int *ret, char *text){
+    int get_one = 0;
+    char *input = (char*)malloc(MAX*sizeof(char));
+    while (get_one == 0){
+        printf("%s", text);
+        if(fgets(input, MAX, stdin) != NULL){
+            input[strcspn(input, "\n")] = '\0';
+            if(strcmp(input, ".") == 0){
+                printf("Fin\n");
+                *ret = 1;
+                get_one = 1;
+                return "";
+            }
+
+            if (strlen(input) > 2){
+                *ret = 0;
+                get_one = 1;
+                return input;
+
+            }
+            printf("Faut savoir entre quelque chose sombre débile\n");
+        }
+    }
+}
+
+BC input_BC_user(void){
+    int loop_r = 1, loop_pre = 0, loop_conclu = 0,premise_count, ret;
+    BC bc = create_BC();
+    char *get = (char*)malloc(MAX*sizeof(char)), text[MAX];
+    printf("\n--- SAISIE DE LA BASE DE CONNAISSANCES (BC) ---\n");
+    printf("fonctionnement : <premisse> / <.> (fin des premisse) / <conclusion>\n");
+    printf("si la premiere premisse est un <.> alors on a terminé la BC.\n");
+    while (loop_r == 1){
+        Regle *new = (Regle*)malloc(sizeof(Regle));
+        new->next = NULL;
+        loop_pre = 1;
+        premise_count = 0;
+        while (loop_pre == 1) {
+            sprintf(text, "premisse %d (ou '.' pour conclusion) > ", premise_count+1);
+            get = get_input(&ret, text);
+            if(ret == 1){
+                loop_pre = 0;
+                if(premise_count == 0){
+                    loop_r = 0;
+                } else {
+                    loop_conclu = 1;
+                }
+            } else if (ret == 0){
+                new = add_premise(new, get);
+                premise_count++;
+            }
+            
+        }
+        while (loop_conclu == 1){
+            sprintf(text, "Conclu > ");
+            get = get_input(&ret, text);
+            if (ret == 0){
+                new = add_conclusion(new, get);
+                loop_conclu = 0;
+            }
+        }
+
+        if(Is_empty(new) == 1){
+            free(new);
+        } else {
+            printf("Ajout de la règle\n");
+            bc = add_rules(bc, new);
+        }
+    }
+    return bc;
+}
+
+BaseFait input_BF_user(void){
+    BaseFait bf = NULL;
+    char *get = (char*)malloc(MAX*sizeof(char)), *text = "Fait > ";
+    int loop = 1, ret;
+    while (loop == 1){
+        get = get_input(&ret, text);
+        if(ret == 1){
+            loop = 0;
+        } else if (ret == 0){
+            bf = add_to_queue(bf, get);
+        }
+    }
+    return bf;
+}
+
 int main(int argc, char *argv[]){
     BC bc;
     BaseFait bf = NULL;
@@ -53,14 +142,21 @@ int main(int argc, char *argv[]){
     if(example == 1){
         bc = create_example_BC();
         bf = create_example_BF();
-        print_BC(bc);
-        print_BF(bf);
+        
     } else{
-        bc = create_BC();
-        bf = NULL;
+        bc = input_BC_user();
+        bf = input_BF_user();
     }
-    
+
+    printf("Base Connaissance : ");
+    print_BC(bc);
+    printf("Base de Fait : ");
+    print_BF(bf);
+
+
     bf = MI(bc, bf);
+
+    printf("Base de fait après MI : ");
     print_BF(bf);
     return 0;
 }

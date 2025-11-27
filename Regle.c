@@ -79,11 +79,14 @@ Regle *remove_premise(Regle* r, char *name){
         return r;
     }
 
-    while(temp->next && strcmp(temp->next->name, name) != 0){
+    int cmp = strcmp(temp->next->name, name);
+
+    while(temp->next && cmp != 0){
         //parcour la liste jusqu'à ce que la prochaine prémisse n'existe pas ou que ce soit celle à supprimer
         temp = temp->next;
+        cmp = strcmp(temp->next->name, name);
     }
-    if(temp->next && strcmp(temp->next->name, name) == 0){
+    if(temp->next && cmp == 0){
         //regarde si la prémisse suivant est celle à supprimer et que la suivant existe alors supprime la suivante
         Proposition *to_free = temp->next;
         temp->next = temp->next->next;
@@ -225,4 +228,17 @@ void print_rules(Regle *r){
             printf("=> Pas de conclusion\n");
         }
     }
+}
+
+void print_BF(BaseFait bf){
+    if(!bf){
+        printf("Base de Fait vide\n");
+        return;
+    }
+    BaseFait temp = bf;
+    while(temp){
+        printf("%s ", temp->name);
+        temp = temp->next;
+    }
+    printf("\n");
 }

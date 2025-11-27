@@ -22,11 +22,11 @@ BC add_rules(BC bc, Regle *r){
 BaseFait MI(BC baseC, BaseFait baseF){
     int modif = 0; //0 si aucune modif n'a été fait sinon 1
     if(!baseC){
-        fprintf(stderr, "Base connaissance null");
+        fprintf(stderr, "Base connaissance Vide (MI)\n");
         return baseF;
     }
     if(!baseF){
-        fprintf(stderr, "Base fait null");
+        fprintf(stderr, "Base fait Vide (MI)\n");
         return NULL;
     }
     Proposition *fait = baseF;
@@ -38,13 +38,18 @@ BaseFait MI(BC baseC, BaseFait baseF){
                 r = remove_premise(r, fait->name);
             }
             if(Is_empty(r)){
-                baseF = add_to_queue(baseF, fait->name);
+                char *conclu = Get_Conclusion(r);
+                if(Is_in(baseF, conclu) == 0){
+                    baseF = add_to_queue(baseF, conclu);
+                }
             }
-
             r = r->next;
         }
         fait = fait->next;
     }
+    print_BC(baseC);
+    print_BF(baseF);
+    baseF = remove_duplicates(baseF);
     return baseF;
 }
 

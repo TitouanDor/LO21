@@ -3,23 +3,37 @@
 #include "Regle.h"
 #include "BaseConnaissance.h"
 
-int main(void){
+BC create_example_BC(void) {
+    BC base_connaissance = create_BC();
+
     Regle *r1 = new_rule();
-    printf("%d\n", Is_empty(r1));
-    r1 = add_premise(r1, "Moteur");
-    r1 = add_premise(r1, "Roue");
-    r1 = add_premise(r1, "Volant");
-    r1 = add_premise(r1, "Volant");
-    print_rules(r1);
-    r1->premise = remove_duplicates(r1->premise);
-    print_rules(r1);
-    r1 = add_conclusion(r1, "roue");
-    print_rules(r1);
-    printf("%d\n", Is_in(r1->premise, "Volant"));
-    remove_premise(r1, "Moteur");
-    printf("%d\n", Is_empty(r1));
-    printf("%s\n", Get_Conclusion(r1));
-    print_rules(r1);
-    BC bc = create_BC();
+    add_premise(r1, "Nuages");
+    add_conclusion(r1, "Pluie");
+    base_connaissance = add_rules(base_connaissance, r1);
+
+    Regle *r2 = new_rule();
+    add_premise(r2, "Pluie");
+    add_premise(r2, "Froid");
+    add_conclusion(r2, "Neige");
+    base_connaissance = add_rules(base_connaissance, r2);
+
+    Regle *r3 = new_rule();
+    add_premise(r3, "Neige");
+    add_conclusion(r3, "Hiver");
+    base_connaissance = add_rules(base_connaissance, r3);
+
+    Regle *r4 = new_rule();
+    add_premise(r4, "Soleil");
+    add_premise(r4, "Cannicule");
+    add_conclusion(r4, "été");
+    base_connaissance = add_rules(base_connaissance, r4);
+
+    return base_connaissance;
+}
+
+
+int main(void){
+    BC bc = create_example_BC();
+    print_BC(bc);
     return 0;
 }

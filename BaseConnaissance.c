@@ -4,19 +4,12 @@
 #include "Regle.h"
 
 BC create_BC(){
-    BC new = (BC)malloc(sizeof(Regle));
-    if(!new){
-        return NULL;
-    }
-    new->conclusion = "";
-    new->next = NULL;
-    new->premise = NULL;
-    return new;
+    return NULL;
 }
 
 BC add_rules(BC bc, Regle *r){
     if(!bc){
-        return NULL;
+        return r;
     }
     Regle *temp = bc; //variable temp pour ce déplacer à la fin de la liste chainée
     while(temp->next != NULL){

@@ -2,6 +2,13 @@
 #define BASECONNAISSANCE_H
 #include "Regle.h"
 
+/**
+*
+*Base de connaissances du système d'inférence. Implémentée comme une liste chaînée de règles, 
+*    chaque élément pointant vers une structure Regle et la suivante dans la base.
+*
+*
+*/
 typedef Regle *BC;
 
 /**

@@ -1,17 +1,34 @@
 #ifndef REGLE_H
 #define REGLE_H
 
+/**
+ * Représente une proposition (fait élémentaire) dans le système.
+ *
+ * Chaque proposition possède un nom et peut être chaînée avec
+ * d'autres propositions pour former une liste.
+ */
 typedef struct proposition{
-    char *name;
-    struct proposition *next;
-}Proposition;
+    char *name;                  /**< Nom de la proposition. */
+    struct proposition *next;    /**< Pointeur vers la proposition suivante. */
+} Proposition;
 
+/**
+ * Représente une règle logique composée de prémisses et d'une conclusion.
+ *
+ * Une règle est constituée d'une liste de propositions (prémisses)
+ * et d'une conclusion unique, et peut être chaînée avec d'autres règles.
+ */
 typedef struct regle{
-    Proposition *premise;
-    char *conclusion;
-    struct regle *next;
-}Regle;
+    Proposition *premise;        /**< Liste chaînée de prémisses de la règle. */
+    char *conclusion;            /**< Conclusion de la règle. */
+    struct regle *next;          /**< Pointeur vers la règle suivante. */
+} Regle;
 
+/**
+ * Base de faits du système d'inférence.
+ *
+ * Implémentée comme une liste chaînée de propositions.
+ */
 typedef Proposition *BaseFait;
 
 /**

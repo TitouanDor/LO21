@@ -6,7 +6,12 @@
 #include "BaseConnaissance.h"
 #define MAX 256
 
-BC create_example_BC(void) {    //pour pouvoir essayer le projet avec une base de connaissances et de faits deja construite.
+/**
+ * Voici une base de connaissances et de faits deja construite pour essayer le projet avec l'utilisation de l'argument ex
+ *
+ * cela nous permet de tester sans a chaque fois redonner des regles et faits
+ */
+BC create_example_BC(void) {
     BC base_connaissance = create_BC();
     
     Regle *r2 = new_rule();
@@ -133,30 +138,33 @@ int main(int argc, char *argv[]){
     BC bc;
     BaseFait bf = NULL;
     int example = 0;
-    if(argc == 2){
+    if(argc == 2){      //verification de l'argument ex pour utiliser la BC et BF préconstruite
         if(strcmp(argv[1], "ex") == 0){
             example = 1;
         }
     }
 
-    if(example == 1){
+    if(example == 1){       //utiliser l'exemple 1
         bc = create_example_BC();
         bf = create_example_BF();
-        
-    } else{
+    } else{     // Saisie utilisateur
+        printf("--- Saisie utilisateur activée ---\n");
         bc = input_BC_user();
         bf = input_BF_user();
     }
 
-    printf("Base Connaissance : ");
+    printf("\n--- Base de connaissances initiale ---\n");
     print_BC(bc);
-    printf("Base de Fait : ");
+
+    printf("\n--- Base de faits initiale ---\n");
     print_BF(bf);
 
 
+    printf("\n--- Exécution du moteur d'inférence ---\n");      // appel du moteur d'inférence
     bf = MI(bc, bf);
 
-    printf("Base de fait après MI : ");
+    printf("\n--- Base de faits finale (après inférence) ---\n");
     print_BF(bf);
+
     return 0;
 }

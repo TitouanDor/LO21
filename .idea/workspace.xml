@@ -28,9 +28,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc2655b6-2527-41a6-b85b-a1fcba19eaae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="dc2655b6-2527-41a6-b85b-a1fcba19eaae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,7 +96,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "inputs",
+    "git-widget-placeholder": "#5 on inputs",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Users/loupi/Desktop/UTBM/TC03/LO21/LO21",
@@ -134,6 +132,7 @@
       <workItem from="1763496637233" duration="712000" />
       <workItem from="1764243567681" duration="4152000" />
       <workItem from="1764256741856" duration="8160000" />
+      <workItem from="1764336405963" duration="281000" />
     </task>
     <servers />
   </component>

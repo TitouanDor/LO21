@@ -178,13 +178,11 @@ char *Get_Conclusion(Regle *r){
     return text;
 }
 
-int Is_in(Proposition* liste, char *propo){     //return 1 si find sinon 0
+int Is_in(Proposition* liste, char *propo){
     if(liste == NULL){
-        //si la liste est vide
         return 0;
     }
     if(strcmp(liste->name, propo) == 0){
-        //si la proposition est celle cherchée
         return 1;
     }
     else{
@@ -192,13 +190,11 @@ int Is_in(Proposition* liste, char *propo){     //return 1 si find sinon 0
     }
 }
 
-int Is_empty(Regle *regle){ //return 1 if empty else 0
+int Is_empty(Regle *regle){
     if(!regle){
-        //si la règle donnée n'existe pas
         return -1;
     }
     if(regle->premise == NULL){
-        //si la liste de prémisse est vide
         return 1;
     }
     return 0;
@@ -231,20 +227,4 @@ void print_rules(Regle *r){
             printf("=> Pas de conclusion\n");
         }
     }
-}
-
-void print_BF(BaseFait bf){
-    if(!bf){
-        printf("La base de faits est vide\n");
-        return;
-    }
-    BaseFait temp = bf; 
-    while(temp){
-        printf("%s", temp->name);
-        if(temp->next){
-            printf(", ");
-        }
-        temp = temp->next;
-    }
-    printf("\n");
 }

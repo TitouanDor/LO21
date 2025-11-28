@@ -25,13 +25,6 @@ typedef struct regle{
 } Regle;
 
 /**
- * Base de faits du système d'inférence.
- *
- * Implémentée comme une liste chaînée de propositions.
- */
-typedef Proposition *BaseFait;
-
-/**
  * Crée une nouvelle règle et l'initialise.
  *
  * \return Un pointeur vers la nouvelle structure Regle.
@@ -129,13 +122,5 @@ int Is_empty(Regle* rule);
  * \param rule Liste ou pointeur sur une ou plusieurs règles à afficher.
  */
 void print_rules(Regle *rule);
-
-/**
-*  Affiche la base de faits passée en paramètre.
-*  Parcourt la structure BaseFait et affiche l'ensemble des faits qu'elle contient sur la sortie standard (ou un autre support défini).
-*
-*  \param bf Pointeur vers la base de faits à afficher.
-*/
-void print_BF(BaseFait bf);
 
 #endif

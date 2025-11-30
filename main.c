@@ -149,8 +149,8 @@ int main(int argc, char *argv[]){
         bf = create_example_BF();
     } else{     // Saisie utilisateur
         printf("--- Saisie utilisateur activée ---\n");
-        bc = user_input_BC();
-        bf = user_input_BF();
+        bc = input_BC_user();
+        bf = input_BF_user();
     }
 
     printf("\n--- Base de connaissances initiale ---\n");

@@ -67,7 +67,7 @@ char *get_input(int *ret, char *text){
                 return input;
 
             }
-            printf("Faut savoir entre quelque chose sombre débile\n");
+            printf("problème lors de la saisie de l'input veuillez reéssayer ! \n");
         }
     }
 }

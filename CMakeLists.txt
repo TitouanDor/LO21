@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(projet LANGUAGES C)
+project(Projet LANGUAGES C)
 
 add_executable(
-    projet 
+    Projet
     main.c
     Regle.c
     BaseConnaissance.c

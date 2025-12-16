@@ -1,18 +1,28 @@
 #ifndef REGLE_H
 #define REGLE_H
 
+/**
+ * Représente une proposition (fait élémentaire) dans le système.
+ *
+ * Chaque proposition possède un nom et peut être chaînée avec
+ * d'autres propositions pour former une liste.
+ */
 typedef struct proposition{
-    char *name;
-    struct proposition *next;
-}Proposition;
+    char *name;                  /**< Nom de la proposition. */
+    struct proposition *next;    /**< Pointeur vers la proposition suivante. */
+} Proposition;
 
+/**
+ * Représente une règle logique composée de prémisses et d'une conclusion.
+ *
+ * Une règle est constituée d'une liste de propositions (prémisses)
+ * et d'une conclusion unique, et peut être chaînée avec d'autres règles.
+ */
 typedef struct regle{
-    Proposition *premise;
-    char *conclusion;
-    struct regle *next;
-}Regle;
-
-typedef Proposition *BaseFait;
+    Proposition *premise;        /**< Liste chaînée de prémisses de la règle. */
+    char *conclusion;            /**< Conclusion de la règle. */
+    struct regle *next;          /**< Pointeur vers la règle suivante. */
+} Regle;
 
 /**
  * Crée une nouvelle règle et l'initialise.
@@ -112,13 +122,5 @@ int Is_empty(Regle* rule);
  * \param rule Liste ou pointeur sur une ou plusieurs règles à afficher.
  */
 void print_rules(Regle *rule);
-
-/**
-*  Affiche la base de faits passée en paramètre.
-*  Parcourt la structure BaseFait et affiche l'ensemble des faits qu'elle contient sur la sortie standard (ou un autre support défini).
-*
-*  \param bf Pointeur vers la base de faits à afficher.
-*/
-void print_BF(BaseFait bf);
 
 #endif

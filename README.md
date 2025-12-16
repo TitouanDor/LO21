@@ -12,5 +12,5 @@ Initialiser CMake avec
 Pour compiler le projet faites
 ```cmake --build .```
 
-## option
+## Option
 Si vous voulez tester le projet avec une base de fait et de connaissance déjà préfaite, lancer le projet avec ```./projet ex``` sinon faites simplement ```./projet```

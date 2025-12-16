@@ -44,6 +44,12 @@ BC create_example_BC(void) {
     add_conclusion(r4, "été");
     base_connaissance = add_rules(base_connaissance, r4);
 
+    Regle *r5 = new_rule();
+    add_premise(r5, "Pluie");
+    add_premise(r5, "Neige");
+    add_conclusion(r5, "Nuages");
+    base_connaissance = add_rules(base_connaissance, r5);
+
     return base_connaissance;
 }
 
@@ -51,6 +57,7 @@ BaseFait create_example_BF(void){
     BaseFait new = NULL;
     new = add_to_queue(new, "Nuages");
     new = add_to_queue(new, "Froid");
+    new = add_to_queue(new, "Nuit");
     new = add_to_queue(new, "Soleil");
     return new;
 }
